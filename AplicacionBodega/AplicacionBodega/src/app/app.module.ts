@@ -10,10 +10,6 @@ import {routing} from "./app.routes";
 import { BodegaComponent } from './bodega/bodega.component';
 import { ItemComponent } from './item/item.component';
 
-// DECORATOR
-// @Decorator({asd:"asd"})
-// @Primary({})
-// @Politecnica({asda:"asdasd"})
 
 @NgModule({
   declarations: [

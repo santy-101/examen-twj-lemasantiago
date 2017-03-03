@@ -4,6 +4,7 @@
 /*global jasmine */
 const { SpecReporter } = require('jasmine-spec-reporter');
 
+//noinspection JSAnnotator
 exports.config = {
   allScriptsTimeout: 11000,
   specs: [

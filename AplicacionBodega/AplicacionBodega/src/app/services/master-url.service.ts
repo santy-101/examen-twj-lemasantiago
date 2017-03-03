@@ -5,9 +5,8 @@ export class MasterURlService {
   private _url:string;
 
   constructor() {
-    this._url = "http://localhost:1337/";
-    // this.url = "https://aplicacion-adrianeguez.c9users.io"
-    // this.url = "https://asdasd-asdasdasd.herokuapp.com"
+    //this._url = "http://localhost:1337/";
+    this.url = "http://examen-twj-lemasantiago-santiagolema.c9users.io:8080/"
   }
 
   get url():string{

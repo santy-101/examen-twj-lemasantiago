@@ -50,7 +50,7 @@ export class BodegaComponent implements OnInit {
         console.log(res);
         this.bodegas.push(res.json());
         this.nuevaBodega = {};
-        this.disabledButtons.NuevaBodegaFormSubmitButton = false;
+        this.disabledButtons.NuevaBodegaFormSubmitButton = false
       },
       (err) => {
         this.disabledButtons.NuevaBodegaFormSubmitButton = false;
@@ -76,7 +76,9 @@ export class BodegaComponent implements OnInit {
 
   actualizarBodega(bodega: any) {
     let parametos = {
-      nombre: bodega.nombre
+      nombre: bodega.nombre,
+      direccion: bodega.direccion,
+      capacidad: bodega.capacidad
     };
     this._http.put(this._masterURL.url + "Bodega/" + bodega.id, parametos)
       .subscribe(

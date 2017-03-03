@@ -8,12 +8,13 @@ import {Form, NgForm} from "@angular/forms";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-// CTRL A +  -  CTRL + ALT + L
+
 export class AppComponent implements OnInit {
 
   constructor() {
   }
 
   ngOnInit() {
+
   }
 }

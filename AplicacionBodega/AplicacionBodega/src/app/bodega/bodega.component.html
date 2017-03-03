@@ -1,5 +1,5 @@
 <h1 align="center">{{title}}</h1>
-<h2>{{error}}</h2>
+
 <div class="container">
   <div class="row">
     <div class="col-sm-5">
@@ -34,7 +34,6 @@
           <label>Capacidad (en toneladas)</label>
 
           <input required
-                 minlength="4"
                  type="number"
                  min = "1"
                  class="form-control"
@@ -45,18 +44,20 @@
                  #nombreElm>
         </div>
         <button [disabled]="disabledButtons.NuevaBodegaFormSubmitButton||!NuevaBodegaForm.valid" type="submit"
-                class="btn btn-block btn-success">Crear Bodega
+                class="btn btn-block btn-success" >Crear Bodega
         </button>
       </form>
     </div>
-    <div class="col-sm-5 animated flipInX" *ngFor="let bodega of bodegas">
+    <div class="col-sm-5 animated flipInX table-bordered ma-margen-top-bottom ma-padding-top-bottom" *ngFor="let bodega of bodegas">
       <div class="text-center">
         <h3>{{bodega.nombre}}</h3>
+        <h3>ID: {{bodega.id}}</h3>
         <p>Dirección: {{bodega.direccion}}</p>
-        <p>Capacidad: {{bodega.capacidad}}</p>
+        <p>Capacidad: {{bodega.capacidad}} toneladas</p>
       </div>
+
       <div class="row animated flipInY" >
-        <div class="col-sm-5">
+        <div class="col-sm-5" >
           <button class="btn btn-block btn-info"
                   (click)="bodega.formularioCerrado = !bodega.formularioCerrado"
           >Actualizar</button>
@@ -67,17 +68,17 @@
         </div>
         <div class="row">
           <div class="col-sm-4"></div>
+          <div class="col-sm-4">
+            <button class="btn btn-block btn-success" [routerLink]="[bodega.id,'item']">Ir a Productos</button>
 
-        <div class="col-sm-4">
-          <button class="btn btn-block btn-success" [routerLink]="[bodega.id,'item']">Ir a Items</button>
-        </div>
+          </div>
         </div>
       </div>
       <div class="div" [hidden]="bodega.formularioCerrado">
         <form action="">
           <form class="animated bounceIn" (ngSubmit)="actualizarBodega(bodega)" #NuevaBodegaForm="ngForm">
-            <div class="form-group">
-              <label>Tienda</label>
+            <div  class="form-group">
+              <label>Bodega</label>
               <input required
                      minlength="4"
                      type="text"
@@ -87,6 +88,24 @@
                      [(ngModel)]="bodega.nombre"
                      #nombre="ngModel"
                      #nombreElm>
+              <input required
+                     minlength="4"
+                     type="text"
+                     class="form-control"
+                     placeholder="Digite la nueva dirección de la bodega"
+                     name="direccion"
+                     [(ngModel)]="bodega.direccion"
+                     #nombre="ngModel"
+                     #nombreElm>
+              <input required
+                     min="1"
+                     type="number"
+                     class="form-control"
+                     placeholder="Digite la nueva capacidad de la bodega (en toneladas)"
+                     name="capacidad"
+                     [(ngModel)]="bodega.capacidad"
+                     #nombre="ngModel"
+                     #nombreElm>
             </div>
             <button [disabled]="disabledButtons.NuevaBodegaFormSubmitButton||!NuevaBodegaForm.valid" type="submit"
                     class="btn btn-block btn-success">Actualizar
@@ -94,8 +113,7 @@
             <button type="button"
                     class="btn btn-block btn-warning"
                     (click)="bodega.formularioCerrado = !bodega.formularioCerrado"
-            >
-              Cancelar
+            >Cancelar
             </button>
           </form>
         </form>
