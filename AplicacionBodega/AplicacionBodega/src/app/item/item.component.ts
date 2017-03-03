@@ -28,7 +28,7 @@ export class ItemComponent implements OnInit {
       .params
       .subscribe(parametros => {
         this._parametros = parametros;
-        this._http.get(this._masterURL.url+'Item?idBodega='+this._parametros.idBodega)
+        this._http.get(this._masterURL.url+'item?idBodega='+this._parametros.idBodega)
           .subscribe(
             (res:Response)=> {
               this.items = res.json() .map((value) => {
@@ -51,7 +51,7 @@ export class ItemComponent implements OnInit {
       peso:peso,
       idBodega:this._parametros.idBodega
     };
-    this._http.post(this._masterURL.url+'Item',item)
+    this._http.post(this._masterURL.url+'item',item)
       .subscribe(
         (res:Response)=>{
           this.items.push(res.json());
@@ -63,7 +63,7 @@ export class ItemComponent implements OnInit {
       )
   }
   borrarItem(id: number) {
-    this._http.delete(this._masterURL.url + "Item/" + id)
+    this._http.delete(this._masterURL.url + "item/" + id)
       .subscribe(
         (res) => {
           let itemBorrado = res.json();
@@ -81,7 +81,7 @@ export class ItemComponent implements OnInit {
       cantidad: item.cantidad,
       peso: item.peso
     };
-    this._http.put(this._masterURL.url + "Item/" + item.id, parametos)
+    this._http.put(this._masterURL.url + "item/" + item.id, parametos)
       .subscribe(
         (res: Response) => {
           item.formularioCerrado = !item.formularioCerrado;

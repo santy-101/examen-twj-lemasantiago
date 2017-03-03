@@ -219,7 +219,7 @@ var ItemComponent = (function () {
             .params
             .subscribe(function (parametros) {
             _this._parametros = parametros;
-            _this._http.get(_this._masterURL.url + 'Item?idBodega=' + _this._parametros.idBodega)
+            _this._http.get(_this._masterURL.url + 'item?idBodega=' + _this._parametros.idBodega)
                 .subscribe(function (res) {
                 _this.items = res.json().map(function (value) {
                     value.formularioCerrado = true;
@@ -238,7 +238,7 @@ var ItemComponent = (function () {
             peso: peso,
             idBodega: this._parametros.idBodega
         };
-        this._http.post(this._masterURL.url + 'Item', item)
+        this._http.post(this._masterURL.url + 'item', item)
             .subscribe(function (res) {
             _this.items.push(res.json());
             _this.nuevoItem = {};
@@ -248,7 +248,7 @@ var ItemComponent = (function () {
     };
     ItemComponent.prototype.borrarItem = function (id) {
         var _this = this;
-        this._http.delete(this._masterURL.url + "Item/" + id)
+        this._http.delete(this._masterURL.url + "item/" + id)
             .subscribe(function (res) {
             var itemBorrado = res.json();
             _this.items = _this.items.filter(function (value) { return itemBorrado.id != value.id; });
@@ -262,7 +262,7 @@ var ItemComponent = (function () {
             cantidad: item.cantidad,
             peso: item.peso
         };
-        this._http.put(this._masterURL.url + "Item/" + item.id, parametos)
+        this._http.put(this._masterURL.url + "item/" + item.id, parametos)
             .subscribe(function (res) {
             item.formularioCerrado = !item.formularioCerrado;
             console.log("Respuesta:", res.json());

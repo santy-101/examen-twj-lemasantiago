@@ -5,7 +5,7 @@ export class MasterURlService {
   private _url:string;
 
   constructor() {
-    // this._url = "http://localhost:1337/";
+   // this._url = "http://localhost:1337/";
     this.url = "http://examen-twj-lemasantiago-santiagolema.c9users.io:8080/"
   }
 
