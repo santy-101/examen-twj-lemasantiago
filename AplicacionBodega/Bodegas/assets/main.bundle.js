@@ -32,7 +32,7 @@ var MasterURlService = (function () {
         configurable: true
     });
     MasterURlService = __decorate([
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(), 
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(),
         __metadata('design:paramtypes', [])
     ], MasterURlService);
     return MasterURlService;
@@ -69,11 +69,13 @@ var BodegaComponent = (function () {
         this.nuevaBodega = {};
         this.bodegas = [];
         this.disabledButtons = {
-            NuevaBodegaFormSubmitButton: false
+            NuevaBodegaFormSubmitButton: false,
+            Oculto: false
         };
     }
     BodegaComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.disabledButtons.Oculto = true;
         this._http.get(this._masterURL.url + "Bodega")
             .subscribe(function (res) {
             _this.bodegas = res.json()
@@ -99,6 +101,7 @@ var BodegaComponent = (function () {
             _this.bodegas.push(res.json());
             _this.nuevaBodega = {};
             _this.disabledButtons.NuevaBodegaFormSubmitButton = false;
+            _this.disabledButtons.Oculto = true;
         }, function (err) {
             _this.disabledButtons.NuevaBodegaFormSubmitButton = false;
             console.log("Ocurrió un error", err);
@@ -134,7 +137,7 @@ var BodegaComponent = (function () {
             selector: 'app-bodega',
             template: __webpack_require__(516),
             styles: [__webpack_require__(511)]
-        }), 
+        }),
         __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_master_url_service__["a" /* MasterURlService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__services_master_url_service__["a" /* MasterURlService */]) === 'function' && _b) || Object])
     ], BodegaComponent);
     return BodegaComponent;
@@ -170,7 +173,7 @@ var HomeComponent = (function () {
             selector: 'app-home',
             template: __webpack_require__(517),
             styles: [__webpack_require__(512)]
-        }), 
+        }),
         __metadata('design:paramtypes', [])
     ], HomeComponent);
     return HomeComponent;
@@ -207,10 +210,11 @@ var ItemComponent = (function () {
         this._http = _http;
         this._masterURL = _masterURL;
         this.title = "Bienvenido al Módulo Items";
-        this.items = [];
         this.nuevoItem = {};
+        this.items = [];
         this.disabledButtons = {
-            NuevoItemFormSubmitButton: false
+            NuevoItemFormSubmitButton: false,
+            Oculto: false
         };
     }
     ItemComponent.prototype.ngOnInit = function () {
@@ -219,7 +223,7 @@ var ItemComponent = (function () {
             .params
             .subscribe(function (parametros) {
             _this._parametros = parametros;
-            _this._http.get(_this._masterURL.url + 'item?idBodega=' + _this._parametros.idBodega)
+            _this._http.get(_this._masterURL.url + "Item?idBodega=" + _this._parametros.idBodega)
                 .subscribe(function (res) {
                 _this.items = res.json().map(function (value) {
                     value.formularioCerrado = true;
@@ -230,25 +234,31 @@ var ItemComponent = (function () {
             });
         });
     };
-    ItemComponent.prototype.crearItem = function (nombre, cantidad, peso) {
+    ItemComponent.prototype.crearItem = function (formulario) {
         var _this = this;
-        var item = {
-            nombre: nombre,
-            cantidad: cantidad,
-            peso: peso,
+        console.log(formulario);
+        this.disabledButtons.NuevoItemFormSubmitButton = true;
+        this._http.post(this._masterURL.url + "Item", {
+            nombre: formulario.value.nombre,
+            cantidad: formulario.value.cantidad,
+            peso: formulario.value.peso,
             idBodega: this._parametros.idBodega
-        };
-        this._http.post(this._masterURL.url + 'item', item)
-            .subscribe(function (res) {
+        }).subscribe(function (res) {
+            console.log("No hubo errores");
+            console.log(res);
             _this.items.push(res.json());
             _this.nuevoItem = {};
+            _this.disabledButtons.NuevoItemFormSubmitButton = false;
+            _this.disabledButtons.Oculto = true;
         }, function (err) {
-            console.log(err);
+            _this.disabledButtons.NuevoItemFormSubmitButton = false;
+            console.log("Ocurrió un error", err);
+        }, function () {
         });
     };
     ItemComponent.prototype.borrarItem = function (id) {
         var _this = this;
-        this._http.delete(this._masterURL.url + "item/" + id)
+        this._http.delete(this._masterURL.url + "Item/" + id)
             .subscribe(function (res) {
             var itemBorrado = res.json();
             _this.items = _this.items.filter(function (value) { return itemBorrado.id != value.id; });
@@ -262,7 +272,7 @@ var ItemComponent = (function () {
             cantidad: item.cantidad,
             peso: item.peso
         };
-        this._http.put(this._masterURL.url + "item/" + item.id, parametos)
+        this._http.put(this._masterURL.url + "Item/" + item.id, parametos)
             .subscribe(function (res) {
             item.formularioCerrado = !item.formularioCerrado;
             console.log("Respuesta:", res.json());
@@ -275,7 +285,7 @@ var ItemComponent = (function () {
             selector: 'app-item',
             template: __webpack_require__(518),
             styles: [__webpack_require__(513)]
-        }), 
+        }),
         __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_http__["b" /* Http */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_http__["b" /* Http */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__services_master_url_service__["a" /* MasterURlService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__services_master_url_service__["a" /* MasterURlService */]) === 'function' && _c) || Object])
     ], ItemComponent);
     return ItemComponent;
@@ -346,7 +356,7 @@ var AppComponent = (function () {
             selector: 'app-root',
             template: __webpack_require__(515),
             styles: [__webpack_require__(510)]
-        }), 
+        }),
         __metadata('design:paramtypes', [])
     ], AppComponent);
     return AppComponent;
@@ -410,7 +420,7 @@ var AppModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_5__services_master_url_service__["a" /* MasterURlService */]
             ],
             bootstrap: [__WEBPACK_IMPORTED_MODULE_4__app_component__["a" /* AppComponent */]]
-        }), 
+        }),
         __metadata('design:paramtypes', [])
     ], AppModule);
     return AppModule;
@@ -542,7 +552,7 @@ module.exports = "<!DOCTYPE html>\n<html>\n<head>\n  <title><%=typeof title == '
 /***/ 516:
 /***/ (function(module, exports) {
 
-module.exports = "<h1 align=\"center\">{{title}}</h1>\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-sm-5\">\n      <form class=\"animated bounceIn\" (ngSubmit)=\"crearBodega(NuevaBodegaForm)\" #NuevaBodegaForm=\"ngForm\">\n        <div class=\"form-group\">\n          <label>Bodega</label>\n\n          <input required\n                 minlength=\"4\"\n                 type=\"text\"\n                 class=\"form-control\"\n                 placeholder=\"Ingrese el nombre de la bodega\"\n                 name=\"nombre\"\n                 [(ngModel)]=\"nuevaBodega.nombre\"\n                 #nombre=\"ngModel\"\n                 #nombreElm>\n        </div>\n        <div class=\"form-group\">\n          <label>Dirección</label>\n\n          <input required\n                 minlength=\"4\"\n                 type=\"text\"\n                 class=\"form-control\"\n                 placeholder=\"Ingrese la dirección de la bodega\"\n                 name=\"direccion\"\n                 [(ngModel)]=\"nuevaBodega.direccion\"\n                 #nombre=\"ngModel\"\n                 #nombreElm>\n        </div>\n        <div class=\"form-group\">\n          <label>Capacidad (en toneladas)</label>\n\n          <input required\n                 type=\"number\"\n                 min = \"1\"\n                 class=\"form-control\"\n                 placeholder=\"Ingrese la capacidad de la bodega (en toneladas)\"\n                 name=\"capacidad\"\n                 [(ngModel)]=\"nuevaBodega.capacidad\"\n                 #nombre=\"ngModel\"\n                 #nombreElm>\n        </div>\n        <button [disabled]=\"disabledButtons.NuevaBodegaFormSubmitButton||!NuevaBodegaForm.valid\" type=\"submit\"\n                class=\"btn btn-block btn-success\" >Crear Bodega\n        </button>\n      </form>\n    </div>\n    <div class=\"col-sm-5 animated flipInX table-bordered ma-margen-top-bottom ma-padding-top-bottom\" *ngFor=\"let bodega of bodegas\">\n      <div class=\"text-center\">\n        <h3>{{bodega.nombre}}</h3>\n        <h3>ID: {{bodega.id}}</h3>\n        <p>Dirección: {{bodega.direccion}}</p>\n        <p>Capacidad: {{bodega.capacidad}} toneladas</p>\n      </div>\n\n      <div class=\"row animated flipInY\" >\n        <div class=\"col-sm-5\" >\n          <button class=\"btn btn-block btn-info\"\n                  (click)=\"bodega.formularioCerrado = !bodega.formularioCerrado\"\n          >Actualizar</button>\n        </div>\n        <div class=\"col-sm-2\"></div>\n        <div class=\"col-sm-5\">\n          <button class=\"btn btn-block btn-danger\" (click)=\"borrarBodega(bodega.id)\">Borrar</button>\n        </div>\n        <div class=\"row\">\n          <div class=\"col-sm-4\"></div>\n          <div class=\"col-sm-4\">\n            <button class=\"btn btn-block btn-success\" [routerLink]=\"[bodega.id,'item']\">Ir a Productos</button>\n\n          </div>\n        </div>\n      </div>\n      <div class=\"div\" [hidden]=\"bodega.formularioCerrado\">\n        <form action=\"\">\n          <form class=\"animated bounceIn\" (ngSubmit)=\"actualizarBodega(bodega)\" #NuevaBodegaForm=\"ngForm\">\n            <div  class=\"form-group\">\n              <label>Bodega</label>\n              <input required\n                     minlength=\"4\"\n                     type=\"text\"\n                     class=\"form-control\"\n                     placeholder=\"Digite el nuevo nombre de la bodega\"\n                     name=\"nombre\"\n                     [(ngModel)]=\"bodega.nombre\"\n                     #nombre=\"ngModel\"\n                     #nombreElm>\n              <input required\n                     minlength=\"4\"\n                     type=\"text\"\n                     class=\"form-control\"\n                     placeholder=\"Digite la nueva dirección de la bodega\"\n                     name=\"direccion\"\n                     [(ngModel)]=\"bodega.direccion\"\n                     #nombre=\"ngModel\"\n                     #nombreElm>\n              <input required\n                     min=\"1\"\n                     type=\"number\"\n                     class=\"form-control\"\n                     placeholder=\"Digite la nueva capacidad de la bodega (en toneladas)\"\n                     name=\"capacidad\"\n                     [(ngModel)]=\"bodega.capacidad\"\n                     #nombre=\"ngModel\"\n                     #nombreElm>\n            </div>\n            <button [disabled]=\"disabledButtons.NuevaBodegaFormSubmitButton||!NuevaBodegaForm.valid\" type=\"submit\"\n                    class=\"btn btn-block btn-success\">Actualizar\n            </button>\n            <button type=\"button\"\n                    class=\"btn btn-block btn-warning\"\n                    (click)=\"bodega.formularioCerrado = !bodega.formularioCerrado\"\n            >Cancelar\n            </button>\n          </form>\n        </form>\n      </div>\n    </div>\n  </div>\n\n\n\n\n    </div>\n\n\n\n\n<!--<router-outlet></router-outlet>-->\n\n"
+module.exports = "<h1 align=\"center\">{{title}}</h1>\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-sm-5\">\n      <form class=\"animated bounceIn\" (ngSubmit)=\"crearBodega(NuevaBodegaForm)\" #NuevaBodegaForm=\"ngForm\">\n        <div class=\"form-group\">\n          <label>Bodega</label>\n\n          <input required\n                 minlength=\"4\"\n                 type=\"text\"\n                 class=\"form-control\"\n                 placeholder=\"Ingrese el nombre de la bodega\"\n                 name=\"nombre\"\n                 [(ngModel)]=\"nuevaBodega.nombre\"\n                 #nombre=\"ngModel\"\n                 #nombreElm>\n        </div>\n        <div class=\"form-group\">\n          <label>Dirección</label>\n\n          <input required\n                 minlength=\"4\"\n                 type=\"text\"\n                 class=\"form-control\"\n                 placeholder=\"Ingrese la dirección de la bodega\"\n                 name=\"direccion\"\n                 [(ngModel)]=\"nuevaBodega.direccion\"\n                 #nombre=\"ngModel\"\n                 #nombreElm>\n        </div>\n        <div class=\"form-group\">\n          <label>Capacidad (en toneladas)</label>\n\n          <input required\n                 type=\"number\"\n                 min = \"1\"\n                 class=\"form-control\"\n                 placeholder=\"Ingrese la capacidad de la bodega (en toneladas)\"\n                 name=\"capacidad\"\n                 [(ngModel)]=\"nuevaBodega.capacidad\"\n                 #nombre=\"ngModel\"\n                 #nombreElm>\n        </div>\n        <button [disabled]=\"disabledButtons.NuevaBodegaFormSubmitButton||!NuevaBodegaForm.valid\" type=\"submit\"\n                class=\"btn btn-block btn-success\">Crear Bodega\n        </button>\n      </form>\n    </div>\n    <div class=\"col-sm-5 animated flipInX table-bordered ma-margen-top-bottom ma-padding-top-bottom\" *ngFor=\"let bodega of bodegas\">\n      <div class=\"text-center\">\n        <h3>{{bodega.nombre}}</h3>\n        <h3>ID: {{bodega.id}}</h3>\n        <p>Dirección: {{bodega.direccion}}</p>\n        <p>Capacidad: {{bodega.capacidad}} toneladas</p>\n      </div>\n\n      <div  class=\"row animated flipInY\" >\n        <div class=\"col-sm-5\" >\n          <button class=\"btn btn-block btn-info\"\n                  (click)=\"disabledButtons.Oculto = false; bodega.formularioCerrado = !bodega.formularioCerrado\"\n          >Actualizar</button>\n        </div>\n        <div class=\"col-sm-2\"></div>\n        <div class=\"col-sm-5\">\n          <button class=\"btn btn-block btn-danger\" (click)=\"borrarBodega(bodega.id)\">Borrar</button>\n        </div>\n        <div class=\"row\">\n          <div class=\"col-sm-4\"></div>\n          <div class=\"col-sm-4\">\n            <button class=\"btn btn-block btn-success\" [routerLink]=\"[bodega.id,'item']\">Ir a Productos</button>\n\n          </div>\n        </div>\n      </div>\n      <div class=\"div\" [hidden]=\"bodega.formularioCerrado || (disabledButtons.Oculto)\">\n        <form action=\"\">\n          <form class=\"animated bounceIn\" (ngSubmit)=\"actualizarBodega(bodega)\" #NuevaBodegaForm=\"ngForm\">\n            <div  class=\"form-group\">\n              <label>Bodega</label>\n              <input required\n                     minlength=\"4\"\n                     type=\"text\"\n                     class=\"form-control\"\n                     placeholder=\"Digite el nuevo nombre de la bodega\"\n                     name=\"nombre\"\n                     [(ngModel)]=\"bodega.nombre\"\n                     #nombre=\"ngModel\"\n                     #nombreElm>\n              <input required\n                     minlength=\"4\"\n                     type=\"text\"\n                     class=\"form-control\"\n                     placeholder=\"Digite la nueva dirección de la bodega\"\n                     name=\"direccion\"\n                     [(ngModel)]=\"bodega.direccion\"\n                     #nombre=\"ngModel\"\n                     #nombreElm>\n              <input required\n                     min=\"1\"\n                     type=\"number\"\n                     class=\"form-control\"\n                     placeholder=\"Digite la nueva capacidad de la bodega (en toneladas)\"\n                     name=\"capacidad\"\n                     [(ngModel)]=\"bodega.capacidad\"\n                     #nombre=\"ngModel\"\n                     #nombreElm>\n            </div>\n            <button [disabled]=\"disabledButtons.NuevaBodegaFormSubmitButton||!NuevaBodegaForm.valid\" type=\"submit\"\n                    class=\"btn btn-block btn-success\">Actualizar\n            </button>\n            <button type=\"button\"\n                    class=\"btn btn-block btn-warning\"\n                    (click)=\"bodega.formularioCerrado = !bodega.formularioCerrado\"\n            >Cancelar\n            </button>\n          </form>\n        </form>\n      </div>\n    </div>\n  </div>\n\n\n\n\n    </div>\n\n\n\n\n<!--<router-outlet></router-outlet>-->\n\n"
 
 /***/ }),
 
@@ -556,7 +566,7 @@ module.exports = "<div class=\"container\">\n  <h1>Bienvenidos</h1>\n\n<div row>
 /***/ 518:
 /***/ (function(module, exports) {
 
-module.exports = "<h1 align=\"center\">{{title}} de la Bodega {{_parametros.idBodega}}</h1>\n\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-sm-5\">\n      <form class=\"animated bounceIn\" (ngSubmit)=\"crearItem(NuevoItemForm)\" #NuevoItemForm=\"ngForm\">\n\n        <div class=\"form-group\">\n          <label>Item</label>\n\n          <input required\n                 minlength=\"4\"\n                 type=\"text\"\n                 class=\"form-control\"\n                 placeholder=\"Ingrese el nombre del item\"\n                 name=\"nombre\"\n                 [(ngModel)]=\"nuevoItem.nombre\"\n                 #nombre=\"ngModel\"\n                 #nombreElm>\n        </div>\n        <div class=\"form-group\">\n          <label>Cantidad</label>\n          <input required\n                 min=\"1\"\n                 type=\"number\"\n                 class=\"form-control\"\n                 placeholder=\"Ingrese la cantidad de items\"\n                 name=\"cantidad\"\n                 [(ngModel)]=\"nuevoItem.cantidad\"\n                 #nombre=\"ngModel\"\n                 #nombreElm>\n        </div>\n        <div class=\"form-group\">\n        <label>Peso (en gramos)</label>\n\n        <input required\n               type=\"number\"\n               min = \"1\"\n               class=\"form-control\"\n               placeholder=\"Ingrese el peso del item (en gramos)\"\n               name=\"peso\"\n               [(ngModel)]=\"nuevoItem.peso\"\n               #nombre=\"ngModel\"\n               #nombreElm>\n      </div>\n        <button [disabled]=\"disabledButtons.NuevoItemFormSubmitButton||!NuevoItemForm.valid\"\n                class=\"btn btn-block btn-success\" (click)=\"crearItem(nuevoItem.nombre,nuevoItem.cantidad,nuevoItem.peso)\">Crear Item\n        </button>\n      </form>\n    </div>\n    <div class=\"col-sm-5 animated flipInX table-bordered ma-margen-top-bottom ma-padding-top-bottom\" *ngFor=\"let item of items\">\n      <div class=\"text-center\">\n        <h3>{{item.nombre}}</h3>\n        <p>Cantidad: {{item.cantidad}}</p>\n        <p>Peso: {{item.peso}} gramos</p>\n      </div>\n      <div class=\"row animated flipInY\" >\n        <div class=\"col-sm-5\" >\n          <button class=\"btn btn-block btn-info\"\n                  (click)=\"item.formularioCerrado = !item.formularioCerrado\"\n          >Actualizar</button>\n        </div>\n        <div class=\"col-sm-2\"></div>\n        <div class=\"col-sm-5\">\n          <button class=\"btn btn-block btn-danger\" (click)=\"borrarItem(item.id)\">Borrar</button>\n        </div>\n        <div class=\"row\">\n          <div class=\"col-sm-4\"></div>\n        </div>\n      </div>\n      <div class=\"div\" [hidden]=\"item.formularioCerrado\">\n        <form action=\"\">\n          <form class=\"animated bounceIn\" (ngSubmit)=\"actualizarItem(item)\" #NuevoItemForm=\"ngForm\">\n            <div  class=\"form-group\">\n              <label>Item</label>\n              <input required\n                     minlength=\"4\"\n                     type=\"text\"\n                     class=\"form-control\"\n                     placeholder=\"Digite el nuevo nombre del item\"\n                     name=\"nombre\"\n                     [(ngModel)]=\"item.nombre\"\n                     #nombre=\"ngModel\"\n                     #nombreElm>\n              <input required\n                     min=\"1\"\n                     type=\"number\"\n                     class=\"form-control\"\n                     placeholder=\"Digite la nueva cantidad de items\"\n                     name=\"cantidad\"\n                     [(ngModel)]=\"item.cantidad\"\n                     #nombre=\"ngModel\"\n                     #nombreElm>\n              <input required\n                     min=\"1\"\n                     type=\"number\"\n                     class=\"form-control\"\n                     placeholder=\"Digite el nuevo peso del item (en gramos)\"\n                     name=\"peso\"\n                     [(ngModel)]=\"item.peso\"\n                     #nombre=\"ngModel\"\n                     #nombreElm>\n            </div>\n            <button [disabled]=\"disabledButtons.NuevoItemFormSubmitButton||!NuevoItemForm.valid\" type=\"submit\"\n                    class=\"btn btn-block btn-success\">Actualizar\n            </button>\n            <button type=\"button\"\n                    class=\"btn btn-block btn-warning\"\n                    (click)=\"item.formularioCerrado = !item.formularioCerrado\"\n            >Cancelar\n            </button>\n          </form>\n        </form>\n      </div>\n    </div>\n  </div>\n\n\n\n\n</div>\n\n\n\n\n<!--<router-outlet></router-outlet>-->\n\n"
+module.exports = "<h1 align=\"center\">{{title}} de la Bodega {{this._parametros.idBodega}}</h1>\n\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-sm-5\">\n      <form class=\"animated bounceIn\" (ngSubmit)=\"crearItem(NuevoItemForm)\" #NuevoItemForm=\"ngForm\">\n\n        <div class=\"form-group\">\n          <label>Item</label>\n\n          <input required\n                 minlength=\"4\"\n                 type=\"text\"\n                 class=\"form-control\"\n                 placeholder=\"Ingrese el nombre del item\"\n                 name=\"nombre\"\n                 [(ngModel)]=\"nuevoItem.nombre\"\n                 #nombre=\"ngModel\"\n                 #nombreElm>\n        </div>\n        <div class=\"form-group\">\n          <label>Cantidad</label>\n          <input required\n                 min=\"1\"\n                 type=\"number\"\n                 class=\"form-control\"\n                 placeholder=\"Ingrese la cantidad de items\"\n                 name=\"cantidad\"\n                 [(ngModel)]=\"nuevoItem.cantidad\"\n                 #nombre=\"ngModel\"\n                 #nombreElm>\n        </div>\n        <div class=\"form-group\">\n        <label>Peso (en gramos)</label>\n\n        <input required\n               type=\"number\"\n               min = \"1\"\n               class=\"form-control\"\n               placeholder=\"Ingrese el peso del item (en gramos)\"\n               name=\"peso\"\n               [(ngModel)]=\"nuevoItem.peso\"\n               #nombre=\"ngModel\"\n               #nombreElm>\n      </div>\n        <button [disabled]=\"disabledButtons.NuevoItemFormSubmitButton||!NuevoItemForm.valid\"\n                class=\"btn btn-block btn-success\" type=\"submit\">Crear Item\n        </button>\n      </form>\n    </div>\n    <div class=\"col-sm-5 animated flipInX table-bordered ma-margen-top-bottom ma-padding-top-bottom\" *ngFor=\"let item of items\">\n      <div class=\"text-center\">\n        <h3>{{item.nombre}}</h3>\n        <p>Cantidad: {{item.cantidad}}</p>\n        <p>Peso: {{item.peso}} gramos</p>\n      </div>\n      <div class=\"row animated flipInY\" >\n        <div class=\"col-sm-5\" >\n          <button class=\"btn btn-block btn-info\"\n                  (click)=\"disabledButtons.Oculto = false; item.formularioCerrado = !item.formularioCerrado\"\n          >Actualizar</button>\n        </div>\n        <div class=\"col-sm-2\"></div>\n        <div class=\"col-sm-5\">\n          <button class=\"btn btn-block btn-danger\" (click)=\"borrarItem(item.id)\">Borrar</button>\n        </div>\n        <div class=\"row\">\n          <div class=\"col-sm-4\"></div>\n        </div>\n      </div>\n      <div class=\"div\" [hidden]=\"item.formularioCerrado || (disabledButtons.Oculto)\">\n        <form action=\"\">\n          <form class=\"animated bounceIn\" (ngSubmit)=\"actualizarItem(item)\" #NuevoItemForm=\"ngForm\">\n            <div  class=\"form-group\">\n              <label>Item</label>\n              <input required\n                     minlength=\"4\"\n                     type=\"text\"\n                     class=\"form-control\"\n                     placeholder=\"Digite el nuevo nombre del item\"\n                     name=\"nombre\"\n                     [(ngModel)]=\"item.nombre\"\n                     #nombre=\"ngModel\"\n                     #nombreElm>\n              <input required\n                     min=\"1\"\n                     type=\"number\"\n                     class=\"form-control\"\n                     placeholder=\"Digite la nueva cantidad de items\"\n                     name=\"cantidad\"\n                     [(ngModel)]=\"item.cantidad\"\n                     #nombre=\"ngModel\"\n                     #nombreElm>\n              <input required\n                     min=\"1\"\n                     type=\"number\"\n                     class=\"form-control\"\n                     placeholder=\"Digite el nuevo peso del item (en gramos)\"\n                     name=\"peso\"\n                     [(ngModel)]=\"item.peso\"\n                     #nombre=\"ngModel\"\n                     #nombreElm>\n            </div>\n            <button [disabled]=\"disabledButtons.NuevoItemFormSubmitButton||!NuevoItemForm.valid\" type=\"submit\"\n                    class=\"btn btn-block btn-success\">Actualizar\n            </button>\n            <button type=\"button\"\n                    class=\"btn btn-block btn-warning\"\n                    (click)=\"item.formularioCerrado = !item.formularioCerrado\"\n            >Cancelar\n            </button>\n          </form>\n        </form>\n      </div>\n    </div>\n  </div>\n\n\n\n\n</div>\n\n\n\n\n<!--<router-outlet></router-outlet>-->\n\n"
 
 /***/ }),
 

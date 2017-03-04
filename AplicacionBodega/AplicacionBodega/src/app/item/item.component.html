@@ -1,4 +1,4 @@
-<h1 align="center">{{title}} de la Bodega {{_parametros.idBodega}}</h1>
+<h1 align="center">{{title}} de la Bodega {{this._parametros.idBodega}}</h1>
 
 
 <div class="container">
@@ -45,7 +45,7 @@
                #nombreElm>
       </div>
         <button [disabled]="disabledButtons.NuevoItemFormSubmitButton||!NuevoItemForm.valid"
-                class="btn btn-block btn-success" (click)="crearItem(nuevoItem.nombre,nuevoItem.cantidad,nuevoItem.peso)">Crear Item
+                class="btn btn-block btn-success" type="submit">Crear Item
         </button>
       </form>
     </div>
@@ -58,7 +58,7 @@
       <div class="row animated flipInY" >
         <div class="col-sm-5" >
           <button class="btn btn-block btn-info"
-                  (click)="item.formularioCerrado = !item.formularioCerrado"
+                  (click)="disabledButtons.Oculto = false; item.formularioCerrado = !item.formularioCerrado"
           >Actualizar</button>
         </div>
         <div class="col-sm-2"></div>
@@ -69,7 +69,7 @@
           <div class="col-sm-4"></div>
         </div>
       </div>
-      <div class="div" [hidden]="item.formularioCerrado">
+      <div class="div" [hidden]="item.formularioCerrado || (disabledButtons.Oculto)">
         <form action="">
           <form class="animated bounceIn" (ngSubmit)="actualizarItem(item)" #NuevoItemForm="ngForm">
             <div  class="form-group">

@@ -14,14 +14,17 @@ export class BodegaComponent implements OnInit {
   nuevaBodega = {};
   bodegas= [];
   disabledButtons = {
-    NuevaBodegaFormSubmitButton: false
+    NuevaBodegaFormSubmitButton: false,
+    Oculto : false
   };
+
 
   constructor(private _http: Http,
               private _masterURL: MasterURlService) {
   }
 
   ngOnInit() {
+    this.disabledButtons.Oculto = true;
     this._http.get(this._masterURL.url + "Bodega")
       .subscribe(
         (res: Response) => {
@@ -40,6 +43,8 @@ export class BodegaComponent implements OnInit {
   crearBodega(formulario: NgForm) {
     console.log(formulario);
     this.disabledButtons.NuevaBodegaFormSubmitButton = true;
+
+
     this._http.post(this._masterURL.url + "Bodega", {
       nombre: formulario.value.nombre,
       direccion: formulario.value.direccion,
@@ -48,9 +53,12 @@ export class BodegaComponent implements OnInit {
       (res) => {
         console.log("No hubo errores");
         console.log(res);
+
         this.bodegas.push(res.json());
         this.nuevaBodega = {};
-        this.disabledButtons.NuevaBodegaFormSubmitButton = false
+        this.disabledButtons.NuevaBodegaFormSubmitButton = false;
+        this.disabledButtons.Oculto = true;
+
       },
       (err) => {
         this.disabledButtons.NuevaBodegaFormSubmitButton = false;
@@ -59,6 +67,7 @@ export class BodegaComponent implements OnInit {
       () => {
       }
     );
+
   }
 
   borrarBodega(id: number) {

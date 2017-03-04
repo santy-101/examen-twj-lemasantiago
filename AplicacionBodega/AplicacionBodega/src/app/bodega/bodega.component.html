@@ -44,7 +44,7 @@
                  #nombreElm>
         </div>
         <button [disabled]="disabledButtons.NuevaBodegaFormSubmitButton||!NuevaBodegaForm.valid" type="submit"
-                class="btn btn-block btn-success" >Crear Bodega
+                class="btn btn-block btn-success">Crear Bodega
         </button>
       </form>
     </div>
@@ -56,10 +56,10 @@
         <p>Capacidad: {{bodega.capacidad}} toneladas</p>
       </div>
 
-      <div class="row animated flipInY" >
+      <div  class="row animated flipInY" >
         <div class="col-sm-5" >
           <button class="btn btn-block btn-info"
-                  (click)="bodega.formularioCerrado = !bodega.formularioCerrado"
+                  (click)="disabledButtons.Oculto = false; bodega.formularioCerrado = !bodega.formularioCerrado"
           >Actualizar</button>
         </div>
         <div class="col-sm-2"></div>
@@ -74,7 +74,7 @@
           </div>
         </div>
       </div>
-      <div class="div" [hidden]="bodega.formularioCerrado">
+      <div class="div" [hidden]="bodega.formularioCerrado || (disabledButtons.Oculto)">
         <form action="">
           <form class="animated bounceIn" (ngSubmit)="actualizarBodega(bodega)" #NuevaBodegaForm="ngForm">
             <div  class="form-group">
