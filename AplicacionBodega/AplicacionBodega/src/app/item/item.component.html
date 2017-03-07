@@ -17,7 +17,7 @@
                  name="nombre"
                  [(ngModel)]="nuevoItem.nombre"
                  #nombre="ngModel"
-                 #nombreElm>
+                 >
         </div>
         <div class="form-group">
           <label>Cantidad</label>
@@ -28,8 +28,8 @@
                  placeholder="Ingrese la cantidad de items"
                  name="cantidad"
                  [(ngModel)]="nuevoItem.cantidad"
-                 #nombre="ngModel"
-                 #nombreElm>
+                 #cantidad="ngModel"
+                >
         </div>
         <div class="form-group">
         <label>Peso (en gramos)</label>
@@ -41,8 +41,8 @@
                placeholder="Ingrese el peso del item (en gramos)"
                name="peso"
                [(ngModel)]="nuevoItem.peso"
-               #nombre="ngModel"
-               #nombreElm>
+               #peso="ngModel"
+               >
       </div>
         <button [disabled]="disabledButtons.NuevoItemFormSubmitButton||!NuevoItemForm.valid"
                 class="btn btn-block btn-success" type="submit">Crear Item
@@ -82,7 +82,7 @@
                      name="nombre"
                      [(ngModel)]="item.nombre"
                      #nombre="ngModel"
-                     #nombreElm>
+                     >
               <input required
                      min="1"
                      type="number"
@@ -90,8 +90,8 @@
                      placeholder="Digite la nueva cantidad de items"
                      name="cantidad"
                      [(ngModel)]="item.cantidad"
-                     #nombre="ngModel"
-                     #nombreElm>
+                     #cantidad="ngModel"
+                     >
               <input required
                      min="1"
                      type="number"
@@ -99,8 +99,8 @@
                      placeholder="Digite el nuevo peso del item (en gramos)"
                      name="peso"
                      [(ngModel)]="item.peso"
-                     #nombre="ngModel"
-                     #nombreElm>
+                     #peso="ngModel"
+                     >
             </div>
             <button [disabled]="disabledButtons.NuevoItemFormSubmitButton||!NuevoItemForm.valid" type="submit"
                     class="btn btn-block btn-success">Actualizar

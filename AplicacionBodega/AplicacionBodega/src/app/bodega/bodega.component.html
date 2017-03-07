@@ -15,7 +15,7 @@
                  name="nombre"
                  [(ngModel)]="nuevaBodega.nombre"
                  #nombre="ngModel"
-                 #nombreElm>
+                 >
         </div>
         <div class="form-group">
           <label>Dirección</label>
@@ -27,8 +27,8 @@
                  placeholder="Ingrese la dirección de la bodega"
                  name="direccion"
                  [(ngModel)]="nuevaBodega.direccion"
-                 #nombre="ngModel"
-                 #nombreElm>
+                 #direccion="ngModel"
+                 >
         </div>
         <div class="form-group">
           <label>Capacidad (en toneladas)</label>
@@ -40,8 +40,8 @@
                  placeholder="Ingrese la capacidad de la bodega (en toneladas)"
                  name="capacidad"
                  [(ngModel)]="nuevaBodega.capacidad"
-                 #nombre="ngModel"
-                 #nombreElm>
+                 #capacidad="ngModel"
+                 >
         </div>
         <button [disabled]="disabledButtons.NuevaBodegaFormSubmitButton||!NuevaBodegaForm.valid" type="submit"
                 class="btn btn-block btn-success">Crear Bodega
@@ -87,7 +87,7 @@
                      name="nombre"
                      [(ngModel)]="bodega.nombre"
                      #nombre="ngModel"
-                     #nombreElm>
+                     >
               <input required
                      minlength="4"
                      type="text"
@@ -95,8 +95,8 @@
                      placeholder="Digite la nueva dirección de la bodega"
                      name="direccion"
                      [(ngModel)]="bodega.direccion"
-                     #nombre="ngModel"
-                     #nombreElm>
+                     #direccion="ngModel"
+                     >
               <input required
                      min="1"
                      type="number"
@@ -104,8 +104,8 @@
                      placeholder="Digite la nueva capacidad de la bodega (en toneladas)"
                      name="capacidad"
                      [(ngModel)]="bodega.capacidad"
-                     #nombre="ngModel"
-                     #nombreElm>
+                     #capacidad="ngModel"
+                     >
             </div>
             <button [disabled]="disabledButtons.NuevaBodegaFormSubmitButton||!NuevaBodegaForm.valid" type="submit"
                     class="btn btn-block btn-success">Actualizar
