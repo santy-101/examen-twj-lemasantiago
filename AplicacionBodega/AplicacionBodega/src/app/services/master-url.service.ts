@@ -6,7 +6,7 @@ export class MasterURlService {
 
   constructor() {
    // this._url = "http://localhost:1337/";
-    this._url = "http://examen-twj-lemasantiago-santiagolema.c9users.io:8080/"
+    this._url = "https://examen-twj-lemasantiago-santiagolema.c9users/"
   }
 
   get url():string{
