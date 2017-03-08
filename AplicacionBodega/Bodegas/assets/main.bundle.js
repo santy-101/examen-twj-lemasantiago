@@ -19,7 +19,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var MasterURlService = (function () {
     function MasterURlService() {
         // this._url = "http://localhost:1337/";
-        this._url = "https://examen-twj-lemasantiago-santiagolema.c9users/";
+        this._url = "http://examen-twj-lemasantiago-santiagolema.c9users:8080/";
     }
     Object.defineProperty(MasterURlService.prototype, "url", {
         get: function () {
